@@ -24,6 +24,9 @@ jobs:
           
       - name: Get commit short sha
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+        
+      - name: Debug SHORT_SHA
+        run: echo "SHORT_SHA is ${{ env.SHORT_SHA }}"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
@@ -31,4 +34,4 @@ jobs:
           context: ./src # Set the build context to the src directory
           file: ./src/Dockerfile
           push: true
-          tags: calavelas/epam-demo:${SHORT_SHA}
+          tags: calavelas/epam-demo:${{ env.SHORT_SHA }}
