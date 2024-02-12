@@ -1,5 +1,4 @@
-name: Build and Push Docker Image and Update Docker Compose
-
+name: Build and Push Docker Image
 on:
   push:
     paths:
@@ -35,23 +34,3 @@ jobs:
           file: ./src/Dockerfile
           push: true
           tags: calavelas/epam-demo:${{ env.SHORT_SHA }}
-
-  update-docker-compose:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-
-      - name: Update image tag in Docker Compose file
-        run: |
-          SHORT_SHA=${{ needs.build-and-push.outputs.short_sha }}
-          sed -i "s|calavelas/epam-demo:1.0.0|calavelas/epam-demo:$SHORT_SHA|g" deployment/docker-compose.yaml
-          
-      - name: Commit and push if changed
-        run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git add deployment/docker-compose.yaml
-          git commit -m "Update Docker Compose with new image tag ${{ needs.build-and-push.outputs.short_sha }}" || exit 0
-          git push
