@@ -3,7 +3,7 @@ CICD IAC DEMO
 ### What is this repository
 - This is a demo repository for a simple node application deployment based on docker-compose.
 - The integration of this repository is not fully complete yet, as the CICD part is in progress (not in scope of the test).
-- The Graphite Dashboard can be accessed through the internet via this URL: http://35.240.221.73/?width=588&height=310&target=stats.timers.test.core.delay.std
+- The Graphite Dashboard can be accessed through the internet via this URL: http://35.240.221.73/?showTarget=stats.timers.test.core.delay.std&width=586&height=308&target=stats.timers.test.core.delay.std&from=-60minutes
 - GCP IAM and Project access will be granted upon request.
 
 ### Repository Folder Structure
