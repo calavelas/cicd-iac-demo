@@ -19,6 +19,14 @@ CICD IAC DEMO
     │   ├── gcp-sa.json         	# GCP Service Account file, Excluded by .gitignore
     └── ...
 
+
+### Infrastructure Overview
+- Application was deployed in Compute Engine (VM Instance) by docker-compose
+- GCP resource in the project was managed by my Terraform script (terraform/main.tf)
+- This Terraform script was run locally on my machine using GCP Service Account file (gcp-sa.json) which is already excluded from project by .gitignore
+- There's two firewall rules added for allowing IAP SSH (Identity Aware Proxy) and allow http access for Graphite dashboard to the internet
+- Both firewall rules utilizing network tag to prevent ip-address was change due to the instance NIC address was ephemeral
+
 ### Suggested Improvement
 - I updated index.js to use the metricsServerHost environment variable instead of localhost. This will provide flexibility to use this container in multiple environments and be able to change metricsServerHost according to the environment.
 - While this deployment via docker compose is easy to set up in a dev environment, it's not a best practice for a production environment. I suggest using Kubernetes or serverless options like Cloud Run and using cloud-managed metric collectors to collect these metrics instead.
