@@ -9,14 +9,14 @@ CICD IAC DEMO
 ### Repository Folder Structure
     .
     ├── ...
-    ├── deployment              			# Deployment Folder
+    ├── deployment              	# Deployment Folder
     │   ├── docker-compose.yaml 	# docker-compose file for packing deployment
-    ├── src                     					# Application Source Code Folder
-    │   ├── index.js            				# Node application
-    │   ├── dockerfile          			  # Dockerfile for building containenr
-    ├── terraform               			   # IAC script to create Infrastructure using Terraform
-    │   ├── main.tf             			    # Terraform configuration file
-    │   ├── gcp-sa.json         			 # GCP Service Account file, Excluded by .gitignore
+    ├── src                     	# Application Source Code Folder
+    │   ├── index.js            	# Node application
+    │   ├── dockerfile              # Dockerfile for building containenr
+    ├── terraform               	# IAC script to create Infrastructure using Terraform
+    │   ├── main.tf             	# Terraform configuration file
+    │   ├── gcp-sa.json         	# GCP Service Account file, Excluded by .gitignore
     └── ...
 
 ### Suggested Improvement
