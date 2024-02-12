@@ -76,7 +76,7 @@ resource "google_compute_instance" "vm_instance" {
 resource "google_compute_firewall" "iap_ssh" {
   name    = "allow-iap-ssh"
   network = google_compute_network.vpc_network.name
-
+  
   allow {
     protocol = "tcp"
     ports    = ["22"]
@@ -90,4 +90,20 @@ resource "google_compute_firewall" "iap_ssh" {
   priority = 1000
 
   description = "Allow SSH access from IAP's TCP forwarding"
+}
+
+# Add firewall rule to allow HTTP traffic on port 80 for instances with the tag 'epam-demo'
+resource "google_compute_firewall" "allow_http" {
+  name    = "allow-http-80"
+  network = google_compute_network.vpc_network.name
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  target_tags   = ["epam-demo"]
+  source_ranges = ["0.0.0.0/0"]
+  priority      = 1000
+  description   = "Allow HTTP access from the internet"
 }
