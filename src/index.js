@@ -11,11 +11,6 @@ function sleep(ms) {
 }
 
 async function main() {
-
-  // Log the metric value
-  const delayValue = Math.random() * 1000;
-  console.log(`Sending metric 'test.core.delay' with value: ${delayValue}`);
-
   // send message to the metrics server
   metrics.timing('test.core.delay', Math.random() * 1000);
 
