@@ -1,8 +1,9 @@
 const lynx = require('lynx');
 
 // instantiate a metrics client
-//  Note: the metric hostname is hardcoded here
-const metrics = new lynx('localhost', 8125);
+// Use an environment variable for the metrics server host
+const metricsServerHost = process.env.metricServerHost || 'localhost'; // Fallback to 'localhost' if not set
+const metrics = new lynx(metricsServerHost, 8125);
 
 // sleep for a given number of milliseconds
 function sleep(ms) {
@@ -10,6 +11,11 @@ function sleep(ms) {
 }
 
 async function main() {
+
+  // Log the metric value
+  const delayValue = Math.random() * 1000;
+  console.log(`Sending metric 'test.core.delay' with value: ${delayValue}`);
+
   // send message to the metrics server
   metrics.timing('test.core.delay', Math.random() * 1000);
 
