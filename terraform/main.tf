@@ -32,6 +32,7 @@ resource "google_compute_subnetwork" "subnet" {
   network       = google_compute_network.vpc_network.self_link
 }
 
+# Create a compute engine instance for hosting demo application
 resource "google_compute_instance" "vm_instance" {
   name         = "epam-demo-instance"
   machine_type = "e2-medium"
@@ -46,6 +47,7 @@ resource "google_compute_instance" "vm_instance" {
   network_interface {
     network    = google_compute_network.vpc_network.id
     subnetwork = google_compute_subnetwork.subnet.id
+    access_config {}
   }
 
   metadata = {
@@ -67,5 +69,25 @@ resource "google_compute_instance" "vm_instance" {
     EOT
   }
 
-  tags = ["epam-demo"]
+  tags = ["epam-demo", "allow-iap-ssh"]
+}
+
+# Add firewall rule to allow gcloud IAP tunnel SSH
+resource "google_compute_firewall" "iap_ssh" {
+  name    = "allow-iap-ssh"
+  network = google_compute_network.vpc_network.name
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  target_tags = ["allow-iap-ssh"]
+
+  # Source ranges for IAP's TCP forwarding
+  source_ranges = ["35.235.240.0/20"]
+
+  priority = 1000
+
+  description = "Allow SSH access from IAP's TCP forwarding"
 }

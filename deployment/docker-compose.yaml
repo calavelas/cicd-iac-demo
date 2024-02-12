@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  epamDemo:
+    image: calavelas/epam-demo:1.0.0
+    pull_policy: always
+    environment:
+      - metricServerHost=graphite # This value can be changed if statsd host changes or is hosted elsewhere
+    depends_on:
+      - graphite
+
+  graphite:
+    image: graphiteapp/graphite-statsd
+    ports:
+      - "80:80"
+      - "2003-2004:2003-2004"
+      - "2023-2024:2023-2024"
+      - "8125:8125/udp"
+      - "8126:8126"
+
+
